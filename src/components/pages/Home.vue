@@ -2,7 +2,7 @@
   <div class="home">
     <div class="columns is-multiline">
       <template v-for="(item, index) in products">
-        <product-items :key="index" :product="item" />
+        <product-items :key="index" :keyProd="index" :product="item" />
       </template>
     </div>
   </div>

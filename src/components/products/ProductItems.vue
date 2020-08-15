@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
-          <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" />
+          <img :src="mainImagePath" alt="Placeholder image" />
         </figure>
       </div>
       <div class="card-content">
@@ -19,12 +19,7 @@
           </div>
         </div>
 
-        <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          nec iaculis mauris.
-          <a>@bulmaio</a>.
-          <a href="#">#css</a>
-          <a href="#">#responsive</a>
+        <div class="content" v-html="product.short_description">
           <br />
           <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
         </div>
@@ -39,25 +34,23 @@ import ProductListing from "@/types/ProductListing.interface";
 
 @Component
 export default class ProductItems extends Vue {
+  mainImage = "";
   @Prop({ type: Object as () => ProductListing })
   public product!: ProductListing;
-  @Prop() private msg!: string;
-  mounted() {
-    console.log("mounted");
-  }
-  mapImage(image) {
+  @Prop() private keyProd!: string;
+  get mainImagePath() {
     let imagePath = "";
 
-    if (image === undefined) {
+    if (this.product.images[0] === undefined) {
       imagePath = "noimagepath";
     } else {
-      const imageName = image.src.split("/").slice(-1)[0];
+      const imageName = this.product.images[0].src.split("/").slice(-1)[0];
       const imageExplode = imageName.split(".");
       const imageRename = imageExplode[0] + "-100x100." + imageExplode[1];
 
-      const index = image.src.split("/").indexOf(imageName);
+      const index = this.product.images[0].src.split("/").indexOf(imageName);
 
-      const urlArray = image.src.split("/");
+      const urlArray = this.product.images[0].src.split("/");
 
       urlArray.splice(index, 1);
 
@@ -67,6 +60,10 @@ export default class ProductItems extends Vue {
     }
 
     return imagePath;
+  }
+
+  mounted() {
+    console.log("mounted");
   }
 }
 </script>
