@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="columns">
+    <div class="columns is-multiline">
       <template v-for="(item, index) in products">
         <product-items :key="index" :product="item" />
       </template>

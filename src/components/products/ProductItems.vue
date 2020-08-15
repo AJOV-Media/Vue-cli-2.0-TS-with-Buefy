@@ -1,5 +1,5 @@
 <template>
-  <div class="column" :key="keyProd">
+  <div class="column is-one-quarter" :key="keyProd">
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
