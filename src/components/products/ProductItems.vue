@@ -9,11 +9,33 @@
       <div class="card-content">
         <div class="media">
           <div class="media-left">
-            <b-icon icon="tshirt-crew" size="is-large" type="is-primary"></b-icon>
+            <b-icon
+              icon="tshirt-crew"
+              size="is-large"
+              type="is-primary"
+            ></b-icon>
           </div>
           <div class="media-content">
             <p class="title is-5">{{ product.name }}</p>
-            <p class="subtitle is-7">@johnsmith</p>
+            <p class="subtitle is-7">
+              <b-taglist attached class="tag-time-price">
+                <b-tag type="is-dark">
+                  <b-icon icon="clock-time-twelve" size="is-small"></b-icon>
+                </b-tag>
+                <b-tag type="is-info"
+                  ><time style="font-size: 10px;">{{
+                    product.date_created | moment("MMMM Do YYYY")
+                  }}</time></b-tag
+                >
+              </b-taglist>
+
+              <b-taglist attached class="tag-time-price">
+                <b-tag type="is-dark">
+                  <b-icon icon="cash-multiple" size="is-small"></b-icon>
+                </b-tag>
+                <b-tag type="is-danger" v-html="product.price_html"></b-tag>
+              </b-taglist>
+            </p>
           </div>
         </div>
 
@@ -30,10 +52,7 @@
           </template>
         </b-field>
 
-        <div class="content" v-html="product.short_description">
-          <br />
-          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-        </div>
+        <div class="content" v-html="product.short_description"></div>
       </div>
     </div>
   </div>
@@ -80,18 +99,16 @@ export default class ProductItems extends Vue {
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.field.is-grouped.is-grouped-multiline > .control:last-child,
+.field.is-grouped.is-grouped-multiline > .control:not(:last-child) {
+  margin-bottom: 0.3rem;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.field.is-grouped > .control:not(:last-child) {
+  margin-right: 0.3rem;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.tag-time-price {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  height: 26px;
 }
 </style>
