@@ -1,5 +1,9 @@
 # Woo Vue-cli-2.0 Typescript Buefy
 
+![Initial Output Desktop](https://github.com/AJOV-Media/Vue-cli-2.0-TS-with-Buefy/blob/master/screenshots/vue-buefy-desktop-initial.jpg)
+
+![Initial Output Mobile](https://github.com/AJOV-Media/Vue-cli-2.0-TS-with-Buefy/blob/master/screenshots/vue-buefy-mobile-initial.jpg)
+
 ## API used
 
 [Woo Commerce Docker Nginx](https://github.com/AJOV-Media/docker-wordpress-wpjson)
