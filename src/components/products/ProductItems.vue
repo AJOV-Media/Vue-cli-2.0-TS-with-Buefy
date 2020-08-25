@@ -1,6 +1,6 @@
 <template>
   <div class="column is-one-third" :key="keyProd">
-    <div class="card">
+    <div class="card" @click="productModal(product)">
       <div class="card-image">
         <figure class="image is-4by3">
           <img :src="mainImagePath" alt="Placeholder image" />
@@ -9,11 +9,7 @@
       <div class="card-content">
         <div class="media">
           <div class="media-left">
-            <b-icon
-              icon="tshirt-crew"
-              size="is-large"
-              type="is-primary"
-            ></b-icon>
+            <b-icon icon="tshirt-crew" size="is-large" type="is-primary"></b-icon>
           </div>
           <div class="media-content">
             <p class="title is-5">{{ product.name }}</p>
@@ -22,11 +18,13 @@
                 <b-tag type="is-dark">
                   <b-icon icon="clock-time-twelve" size="is-small"></b-icon>
                 </b-tag>
-                <b-tag type="is-info"
-                  ><time style="font-size: 10px;">{{
+                <b-tag type="is-info">
+                  <time style="font-size: 10px;">
+                    {{
                     product.date_created | moment("MMMM Do YYYY")
-                  }}</time></b-tag
-                >
+                    }}
+                  </time>
+                </b-tag>
               </b-taglist>
 
               <b-taglist attached class="tag-time-price">
@@ -60,6 +58,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import ProductDetails from "../modals/ProductDetails.vue";
 import ProductListing from "@/types/ProductListing.interface";
 
 @Component
@@ -91,6 +90,17 @@ export default class ProductItems extends Vue {
 
     return imagePath;
   }
+
+  productModal = theProduct => {
+    this.$buefy.modal.open({
+      parent: this,
+      component: ProductDetails,
+      props: { productDetail: theProduct },
+      hasModalCard: true,
+      customClass: "product-detail-modal",
+      trapFocus: true
+    });
+  };
 
   mounted() {
     console.log("mounted");
