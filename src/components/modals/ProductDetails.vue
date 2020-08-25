@@ -1,10 +1,47 @@
 <template>
   <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
-      <p class="modal-card-title">Product</p>
+      <p class="modal-card-title">{{ productDetail.name }}</p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
-    <section class="modal-card-body"></section>
+    <section class="modal-card-body">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img :src="productDetail.images[0].src" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="subtitle is-6">
+                <b-taglist attached class="tag-time-price">
+                  <b-tag type="is-dark">
+                    <b-icon icon="clock-time-twelve" size="is-small"></b-icon>
+                  </b-tag>
+                  <b-tag type="is-info">
+                    <time style="font-size: 10px;">
+                      {{
+                      productDetail.date_created | moment("MMMM Do YYYY")
+                      }}
+                    </time>
+                  </b-tag>
+                </b-taglist>
+
+                <b-taglist attached class="tag-time-price">
+                  <b-tag type="is-dark">
+                    <b-icon icon="cash-multiple" size="is-small"></b-icon>
+                  </b-tag>
+                  <b-tag type="is-danger" v-html="productDetail.price_html"></b-tag>
+                </b-taglist>
+              </p>
+            </div>
+          </div>
+
+          <div class="content" v-html="productDetail.description"></div>
+        </div>
+      </div>
+    </section>
     <footer class="modal-card-foot">
       <button class="button" type="button" @click="$emit('close')">Close</button>
       <button class="button is-primary">Add to Cart?</button>
@@ -22,4 +59,16 @@ export default class ProductDetails extends Vue {
 }
 </script>
 <style scoped>
+.field.is-grouped.is-grouped-multiline > .control:last-child,
+.field.is-grouped.is-grouped-multiline > .control:not(:last-child) {
+  margin-bottom: 0.3rem;
+}
+.field.is-grouped > .control:not(:last-child) {
+  margin-right: 0.3rem;
+}
+.tag-time-price {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  height: 26px;
+}
 </style>>
