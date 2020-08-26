@@ -7,9 +7,13 @@
     <section class="modal-card-body">
       <div class="card">
         <div class="card-image">
-          <figure class="image is-4by3">
-            <img :src="productDetail.images[0].src" alt="Placeholder image" />
-          </figure>
+          <b-carousel :indicator-inside="false">
+            <b-carousel-item v-for="(item, i) in productDetail.images" :key="i">
+              <span class="image">
+                <img :src="item.src" />
+              </span>
+            </b-carousel-item>
+          </b-carousel>
         </div>
         <div class="card-content">
           <div class="media">
@@ -70,5 +74,11 @@ export default class ProductDetails extends Vue {
   margin-bottom: 0px;
   padding-bottom: 0px;
   height: 26px;
+}
+.is-active .al img {
+  filter: grayscale(0%);
+}
+.al img {
+  filter: grayscale(100%);
 }
 </style>>
