@@ -65,9 +65,9 @@ import ProductFields from "@/types/ProductFields.interface";
 export default class ProductDetails extends Vue {
   @Prop({ type: Object as () => ProductFields })
   public productDetail!: ProductFields;
-  getImgThumbs(value) {
+  getImgThumbs = value => {
     return this.productDetail.images[value.i].src;
-  }
+  };
 }
 </script>
 <style scoped>
