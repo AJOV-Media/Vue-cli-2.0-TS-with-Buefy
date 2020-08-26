@@ -15,7 +15,7 @@
             </b-carousel-item>
             <template slot="indicators" slot-scope="props">
               <span class="al image">
-                <img :src="getImgThumbs(props)" />
+                <img :src="getImgThumbs(props)" :title="getImageName(props)" />
               </span>
             </template>
           </b-carousel>
@@ -66,7 +66,28 @@ export default class ProductDetails extends Vue {
   @Prop({ type: Object as () => ProductFields })
   public productDetail!: ProductFields;
   getImgThumbs = value => {
-    return this.productDetail.images[value.i].src;
+    //Thumbnail image only
+    let imagePath = "";
+    const imageName = this.productDetail.images[value.i].src
+      .split("/")
+      .slice(-1)[0];
+    const imageExplode = imageName.split(".");
+    const imageRename = imageExplode[0] + "-150x150." + imageExplode[1];
+    const index = this.productDetail.images[value.i].src
+      .split("/")
+      .indexOf(imageName);
+    const urlArray = this.productDetail.images[0].src.split("/");
+
+    urlArray.splice(index, 1);
+
+    const finalUrl = urlArray.join("/") + "/" + imageRename;
+
+    imagePath = finalUrl;
+
+    return imagePath;
+  };
+  getImageName = value => {
+    return this.productDetail.images[value.i].name;
   };
 }
 </script>
