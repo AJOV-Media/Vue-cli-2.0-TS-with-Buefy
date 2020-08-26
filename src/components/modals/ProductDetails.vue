@@ -13,6 +13,11 @@
                 <img :src="item.src" />
               </span>
             </b-carousel-item>
+            <template slot="indicators" slot-scope="props">
+              <span class="al image">
+                <img :src="getImgThumbs(props)" />
+              </span>
+            </template>
           </b-carousel>
         </div>
         <div class="card-content">
@@ -60,6 +65,9 @@ import ProductFields from "@/types/ProductFields.interface";
 export default class ProductDetails extends Vue {
   @Prop({ type: Object as () => ProductFields })
   public productDetail!: ProductFields;
+  getImgThumbs(value) {
+    return this.productDetail.images[value.i].src;
+  }
 }
 </script>
 <style scoped>
