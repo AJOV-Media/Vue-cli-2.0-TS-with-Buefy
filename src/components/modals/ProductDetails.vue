@@ -104,10 +104,15 @@ export default class ProductDetails extends Vue {
   padding-bottom: 0px;
   height: 26px;
 }
+.image img {
+  height: 400px;
+}
 .is-active .al img {
   filter: grayscale(0%);
 }
 .al img {
   filter: grayscale(100%);
+  height: 50px;
+  width: 70px;
 }
 </style>>
