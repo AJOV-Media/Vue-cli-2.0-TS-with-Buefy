@@ -53,7 +53,10 @@
     </section>
     <footer class="modal-card-foot">
       <button class="button" type="button" @click="$emit('close')">Close</button>
-      <button class="button is-primary">Add to Cart?</button>
+      <b-field label>
+        <b-input type="number" class="howMany" value="1" v-model="howMany"></b-input>
+      </b-field>
+      <button class="button is-primary" @click="addToCart(productDetail.id)">Add to Cart?</button>
     </footer>
   </div>
 </template>
@@ -63,6 +66,7 @@ import ProductFields from "@/types/ProductFields.interface";
 
 @Component
 export default class ProductDetails extends Vue {
+  howMany = 1;
   @Prop({ type: Object as () => ProductFields })
   public productDetail!: ProductFields;
   getImgThumbs = value => {
@@ -89,6 +93,49 @@ export default class ProductDetails extends Vue {
   getImageName = value => {
     return this.productDetail.images[value.i].name;
   };
+  addToCart(productId) {
+    const retrieveCartObjects = localStorage.getItem("wooBuefyVueCart");
+    const cartObjects = JSON.parse(retrieveCartObjects || "[]");
+
+    if (cartObjects.length > 0) {
+      let updateCartObject = {};
+      const updatedCartObjects = JSON.parse("[]");
+      let alreadyAdded = false;
+      for (let i = 0; i < cartObjects.length; i++) {
+        if (cartObjects[i].product_id === productId) {
+          //if product id is already on the cart
+          alreadyAdded = true;
+          updateCartObject = {
+            productId: cartObjects[i].product_id,
+            howMany: 5
+          };
+        } else {
+          updateCartObject = {
+            productId: cartObjects[i].product_id,
+            howMany: cartObjects[i].howMany
+          };
+        }
+        updatedCartObjects.push(updateCartObject);
+      }
+      if (!alreadyAdded) {
+        updateCartObject = {
+          productId: productId,
+          howMany: 1
+        };
+        updatedCartObjects.push(updateCartObject);
+        alreadyAdded = false;
+      }
+      localStorage.setItem(
+        "wooBuefyVueCart",
+        JSON.stringify(updatedCartObjects)
+      );
+    } else {
+      //only if cart is all empty
+      const addCartObject = { productId: productId, howMany: 1 };
+      cartObjects.push(addCartObject);
+      localStorage.setItem("wooBuefyVueCart", JSON.stringify(cartObjects));
+    }
+  }
 }
 </script>
 <style scoped>
@@ -114,5 +161,9 @@ export default class ProductDetails extends Vue {
   filter: grayscale(100%);
   height: 50px;
   width: 70px;
+}
+.howMany {
+  width: 50px;
+  margin-top: 10px;
 }
 </style>>
