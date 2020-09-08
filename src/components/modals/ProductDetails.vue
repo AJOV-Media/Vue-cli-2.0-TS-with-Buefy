@@ -102,16 +102,16 @@ export default class ProductDetails extends Vue {
       const updatedCartObjects = JSON.parse("[]");
       let alreadyAdded = false;
       for (let i = 0; i < cartObjects.length; i++) {
-        if (cartObjects[i].product_id === productId) {
+        if (cartObjects[i].productId === productId) {
           //if product id is already on the cart
           alreadyAdded = true;
           updateCartObject = {
-            productId: cartObjects[i].product_id,
-            howMany: 5
+            productId: cartObjects[i].productId,
+            howMany: Number(this.howMany)
           };
         } else {
           updateCartObject = {
-            productId: cartObjects[i].product_id,
+            productId: cartObjects[i].productId,
             howMany: cartObjects[i].howMany
           };
         }
@@ -120,7 +120,7 @@ export default class ProductDetails extends Vue {
       if (!alreadyAdded) {
         updateCartObject = {
           productId: productId,
-          howMany: 1
+          howMany: Number(this.howMany)
         };
         updatedCartObjects.push(updateCartObject);
         alreadyAdded = false;
@@ -131,7 +131,10 @@ export default class ProductDetails extends Vue {
       );
     } else {
       //only if cart is all empty
-      const addCartObject = { productId: productId, howMany: 1 };
+      const addCartObject = {
+        productId: productId,
+        howMany: Number(this.howMany)
+      };
       cartObjects.push(addCartObject);
       localStorage.setItem("wooBuefyVueCart", JSON.stringify(cartObjects));
     }
