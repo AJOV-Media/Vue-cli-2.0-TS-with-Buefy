@@ -19,6 +19,7 @@ import ProductItemCarts from "../products/ProductItemCarts.vue";
 })
 export default class Cart extends Vue {
   products: any = [];
+  totalPrice: number;
   WooCommerce: any = new WooCommerceRestApi({
     url: "https://woocommerce.local:8091/",
     consumerKey: "ck_e69ffab389c5ab9957b0f3e67a0398047f9d62d9",
@@ -33,18 +34,27 @@ export default class Cart extends Vue {
     this.fetchProducts();
   }
   fetchProducts() {
-    this.WooCommerce.get("products", { page: 1 })
-      .then(response => {
-        Object.keys(response.data).forEach(key => {
-          this.products = [...this.products, response.data[key]];
-        });
-      })
-      .catch(error => {
-        console.log("Error Data:", error);
-      })
-      .finally(() => {
-        // console.log(this.products);
-      });
+    const retrieveCartObjects = localStorage.getItem("wooBuefyVueCart");
+    const cartObjects = JSON.parse(retrieveCartObjects || "[]");
+
+    if (cartObjects.length > 0) {
+      for (let i = 0; i < cartObjects.length; i++) {
+        const howMany = cartObjects[i].howMany;
+        this.WooCommerce.get("products/" + cartObjects[i].productId)
+          .then(response => {
+            response.data.qty = howMany;
+            this.totalPrice += Number(response.data.price) * response.data.qty;
+
+            this.products = [...this.products, response.data];
+          })
+          .catch(error => {
+            console.log("Error Data:", error);
+          })
+          .finally(() => {
+            console.log("done finally");
+          });
+      }
+    }
   }
 }
 </script>

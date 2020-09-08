@@ -9,33 +9,36 @@
       <div class="content">
         <p>
           <strong>{{ product.name }}</strong>
-          <small>@johnsmith</small>
-          <small>31m</small>
-          <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+          <b-field grouped group-multiline class="category-group">
+            <template v-for="(item, index) in product.categories">
+              <div class="control" :key="index">
+                <b-taglist attached>
+                  <b-tag type="is-dark">
+                    <b-icon icon="view-dashboard" size="is-small"></b-icon>
+                  </b-tag>
+                  <b-tag type="is-info">{{ item.name }}</b-tag>
+                </b-taglist>
+              </div>
+            </template>
+          </b-field>
+          <span class="product-description" v-html="product.short_description"></span>
         </p>
       </div>
       <nav class="level is-mobile">
         <div class="level-left">
-          <a class="level-item">
-            <span class="icon is-small">
-              <i class="fas fa-reply"></i>
-            </span>
-          </a>
-          <a class="level-item">
-            <span class="icon is-small">
-              <i class="fas fa-retweet"></i>
-            </span>
-          </a>
-          <a class="level-item">
-            <span class="icon is-small">
-              <i class="fas fa-heart"></i>
-            </span>
-          </a>
+          <b-taglist attached class="tag-time-price">
+            <b-tag type="is-dark">
+              <b-icon icon="cash-multiple" size="is-small"></b-icon>
+            </b-tag>
+            <b-tag type="is-danger" v-html="product.price_html"></b-tag>
+          </b-taglist>
         </div>
       </nav>
     </div>
     <div class="media-right">
-      <button class="delete"></button>
+      <b-field label="Qty">
+        <b-input type="number" class="howMany" value="1" v-model="howMany"></b-input>
+      </b-field>
     </div>
   </article>
 </template>
@@ -46,6 +49,7 @@ import ProductListing from "@/types/ProductListing.interface";
 
 @Component
 export default class ProductItemCarts extends Vue {
+  howMany = 1;
   mainImage = "";
   @Prop({ type: Object as () => ProductListing })
   public product!: ProductListing;
@@ -73,6 +77,9 @@ export default class ProductItemCarts extends Vue {
 
     return imagePath;
   }
+  created() {
+    this.howMany = this.product.qty;
+  }
 }
 </script>
 
@@ -88,5 +95,16 @@ export default class ProductItemCarts extends Vue {
   margin-bottom: 0px;
   padding-bottom: 0px;
   height: 26px;
+}
+.howMany {
+  width: 50px;
+  margin-top: 10px;
+}
+.category-group {
+  display: inline-block;
+  margin-left: 20px;
+}
+.product-description {
+  font-size: 14px;
 }
 </style>

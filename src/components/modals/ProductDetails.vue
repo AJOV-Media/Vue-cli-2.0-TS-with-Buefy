@@ -169,4 +169,4 @@ export default class ProductDetails extends Vue {
   width: 50px;
   margin-top: 10px;
 }
-</style>>
+</style>
