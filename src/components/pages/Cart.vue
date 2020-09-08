@@ -5,6 +5,20 @@
         <product-item-carts :key="index" :keyProd="index" :product="item" />
       </template>
     </div>
+    <div class="level">
+      <!-- Left side -->
+      <div class="level-left"></div>
+
+      <!-- Right side -->
+      <div class="level-right">
+        <p class="level-item">
+          <a>Total</a>
+        </p>
+        <p class="level-item">
+          <a class="button is-success">${{totalPrice.toFixed(2)}}</a>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -19,7 +33,7 @@ import ProductItemCarts from "../products/ProductItemCarts.vue";
 })
 export default class Cart extends Vue {
   products: any = [];
-  totalPrice: number;
+  totalPrice = 0.0;
   WooCommerce: any = new WooCommerceRestApi({
     url: "https://woocommerce.local:8091/",
     consumerKey: "ck_e69ffab389c5ab9957b0f3e67a0398047f9d62d9",
