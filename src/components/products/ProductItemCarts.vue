@@ -2,7 +2,7 @@
   <article class="media">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img src="https://bulma.io/images/placeholders/128x128.png" />
+        <img :src="mainImagePath" />
       </p>
     </figure>
     <div class="media-content">
@@ -37,7 +37,12 @@
     </div>
     <div class="media-right">
       <b-field label="Qty">
-        <b-input type="number" class="howMany" value="1" v-model="howMany"></b-input>
+        <b-input
+          type="number"
+          class="howMany"
+          :value="product.qty"
+          @input="updateCart($event, product.id)"
+        ></b-input>
       </b-field>
     </div>
   </article>
@@ -49,7 +54,6 @@ import ProductListing from "@/types/ProductListing.interface";
 
 @Component
 export default class ProductItemCarts extends Vue {
-  howMany = 1;
   mainImage = "";
   @Prop({ type: Object as () => ProductListing })
   public product!: ProductListing;
@@ -77,8 +81,51 @@ export default class ProductItemCarts extends Vue {
 
     return imagePath;
   }
-  created() {
-    this.howMany = this.product.qty;
+  updateCart(event, productId) {
+    const retrieveCartObjects = localStorage.getItem("wooBuefyVueCart");
+    const cartObjects = JSON.parse(retrieveCartObjects || "[]");
+
+    if (cartObjects.length > 0) {
+      let updateCartObject = {};
+      const updatedCartObjects = JSON.parse("[]");
+      let alreadyAdded = false;
+      for (let i = 0; i < cartObjects.length; i++) {
+        if (cartObjects[i].productId === productId) {
+          //if product id is already on the cart
+          alreadyAdded = true;
+          updateCartObject = {
+            productId: cartObjects[i].productId,
+            howMany: Number(event)
+          };
+        } else {
+          updateCartObject = {
+            productId: cartObjects[i].productId,
+            howMany: cartObjects[i].howMany
+          };
+        }
+        updatedCartObjects.push(updateCartObject);
+      }
+      if (!alreadyAdded) {
+        updateCartObject = {
+          productId: productId,
+          howMany: Number(event)
+        };
+        updatedCartObjects.push(updateCartObject);
+        alreadyAdded = false;
+      }
+      localStorage.setItem(
+        "wooBuefyVueCart",
+        JSON.stringify(updatedCartObjects)
+      );
+    } else {
+      //only if cart is all empty
+      const addCartObject = {
+        productId: productId,
+        howMany: Number(event)
+      };
+      cartObjects.push(addCartObject);
+      localStorage.setItem("wooBuefyVueCart", JSON.stringify(cartObjects));
+    }
   }
 }
 </script>
