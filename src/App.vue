@@ -3,7 +3,7 @@
     <div class="sidebar-page">
       <section class="sidebar-layout">
         <Menu />
-        <div class="p-1">
+        <div class="p-1 main-right-content">
           <router-view />
         </div>
       </section>
@@ -17,8 +17,8 @@ import Menu from "./components/UI/Menu.vue";
 
 @Component({
   components: {
-    Menu,
-  },
+    Menu
+  }
 })
 export default class App extends Vue {}
 </script>
@@ -30,5 +30,8 @@ export default class App extends Vue {}
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+}
+.main-right-content {
+  width: 100%;
 }
 </style>
