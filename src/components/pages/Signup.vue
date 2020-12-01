@@ -37,6 +37,7 @@
                     <b-input
                       placeholder="Last name"
                       v-model="user.last_name"
+                      ref="lastName"
                       required
                       type="text"
                       icon="form-textbox"
@@ -47,8 +48,10 @@
                     <b-input
                       placeholder="Email"
                       v-model="user.email"
+                      ref="email"
                       type="email"
                       icon="email"
+                      required
                       icon-right="close-circle"
                       icon-right-clickable
                       @icon-right-click="clearEmailIconClick"
@@ -59,6 +62,7 @@
                     <b-input
                       type="password"
                       placeholder="Password"
+                      ref="password"
                       v-model="user.password"
                       required
                       icon="form-textbox"
@@ -111,10 +115,13 @@ import { UserFields } from "@/types";
 @Component
 export default class Signup extends Vue {
   user: UserFields = {
-    email: ""
+    email: "",
   };
   $refs: {
     firstName: HTMLFormElement;
+    lastName: HTMLFormElement;
+    email: HTMLFormElement;
+    password: HTMLFormElement;
   };
   confirmPassword: string = "";
   validationConfirm: string = "";
@@ -127,7 +134,7 @@ export default class Signup extends Vue {
     consumerSecret: "cs_30d030a4f3d6a1e132a9b0bdb8fc35f0b81171c7",
     version: "wc/v3",
     verifySsl: true,
-    queryStringAuth: true
+    queryStringAuth: true,
   });
   @Prop() private msg!: string;
   created() {
@@ -139,13 +146,16 @@ export default class Signup extends Vue {
     this.user.email = "";
   }
   validateStep() {
-    const validName = this.$refs.firstName.checkHtml5Validity();
+    const validFirstName = this.$refs.firstName.checkHtml5Validity();
+    const validLastName = this.$refs.lastName.checkHtml5Validity();
+    const validEmail = this.$refs.email.checkHtml5Validity();
+    const validPassword = this.$refs.password.checkHtml5Validity();
 
-    this.signupStep = 1;
-    if (this.signupStep === 1) {
-      if (this.user.password != this.confirmPassword) {
-        this.validationConfirm = "Password doesn't match confirm password";
-        this.signupStep = 0;
+    if (this.signupStep === 0) {
+      if (!validFirstName || !validLastName || !validEmail || !validPassword) {
+        return false;
+      } else {
+        this.signupStep = 1;
       }
     }
   }
