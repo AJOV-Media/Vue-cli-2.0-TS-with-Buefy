@@ -68,14 +68,15 @@
                       icon="form-textbox"
                     ></b-input>
                   </b-field>
-                  <b-field>
+                  <b-field
+                    :type="typeConfirmPassword"
+                    :message="messageConfirmPassword"
+                  >
                     <b-input
                       type="password"
                       placeholder="Confirm Password"
                       v-model="confirmPassword"
-                      required
                       icon="form-textbox"
-                      :validation-message="validationConfirm"
                     ></b-input>
                   </b-field>
                 </b-step-item>
@@ -116,6 +117,7 @@ import { UserFields } from "@/types";
 export default class Signup extends Vue {
   user: UserFields = {
     email: "",
+    password: "",
   };
   $refs: {
     firstName: HTMLFormElement;
@@ -124,9 +126,10 @@ export default class Signup extends Vue {
     password: HTMLFormElement;
   };
   confirmPassword: string = "";
-  validationConfirm: string = "";
   labelPosition: "bottom";
   position: "0";
+  typeConfirmPassword: string = "";
+  messageConfirmPassword: string = "";
   signupStep: number = 0;
   WooCommerce: any = new WooCommerceRestApi({
     url: "https://woocommerce.local:8091/",
@@ -140,7 +143,6 @@ export default class Signup extends Vue {
   created() {
     this.labelPosition = "bottom";
     this.position = "0";
-    this.validationConfirm = "Please fill out this field.";
   }
   clearEmailIconClick() {
     this.user.email = "";
@@ -152,6 +154,14 @@ export default class Signup extends Vue {
     const validPassword = this.$refs.password.checkHtml5Validity();
 
     if (this.signupStep === 0) {
+      if (this.user.password != this.confirmPassword) {
+        this.typeConfirmPassword = "is-danger";
+        this.messageConfirmPassword = "Password doesn't Match";
+        return false;
+      } else {
+        this.typeConfirmPassword = "";
+        this.messageConfirmPassword = "";
+      }
       if (!validFirstName || !validLastName || !validEmail || !validPassword) {
         return false;
       } else {
