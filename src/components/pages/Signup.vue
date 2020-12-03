@@ -81,9 +81,90 @@
                   </b-field>
                 </b-step-item>
 
-                <b-step-item label="Billing Information" icon="crosshairs-gps"
-                  >Billing information fields here</b-step-item
-                >
+                <b-step-item label="Billing Information" icon="crosshairs-gps">
+                  <b-field>
+                    <b-input
+                      placeholder="Billing Address 1"
+                      ref="billing.address_1"
+                      v-model="user.billing.address_1"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Billing Address 2"
+                      ref="billing_address_2"
+                      v-model="user.billing.address_2"
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="City"
+                      ref="city"
+                      v-model="user.billing.city"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="State"
+                      ref="state"
+                      v-model="user.billing.state"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Postcode"
+                      ref="postcode"
+                      v-model="user.billing.postcode"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Country"
+                      ref="country"
+                      v-model="user.billing.country"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Billing Email"
+                      v-model="user.billing.email"
+                      ref="billing_email"
+                      type="email"
+                      icon="email"
+                      required
+                      icon-right="close-circle"
+                      icon-right-clickable
+                      @icon-right-click="clearEmailIconClick"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Phone"
+                      ref="phone"
+                      v-model="user.billing.phone"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                </b-step-item>
 
                 <b-step-item
                   label="Shipping Information"
@@ -118,6 +199,7 @@ export default class Signup extends Vue {
   user: UserFields = {
     email: "",
     password: "",
+    billing: {},
   };
   $refs: {
     firstName: HTMLFormElement;
