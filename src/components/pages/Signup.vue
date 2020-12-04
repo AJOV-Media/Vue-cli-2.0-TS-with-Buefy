@@ -166,12 +166,89 @@
                   </b-field>
                 </b-step-item>
 
-                <b-step-item
-                  label="Shipping Information"
-                  icon="map-marker"
-                  disabled
-                  >Shipping information fields here</b-step-item
-                >
+                <b-step-item label="Shipping Information" icon="map-marker"
+                  ><b-field>
+                    <b-input
+                      placeholder="Shipping Address 1"
+                      ref="shipping.address_1"
+                      v-model="user.shipping.address_1"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Shipping Address 2"
+                      ref="shipping_address_2"
+                      v-model="user.shipping.address_2"
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="City"
+                      ref="city"
+                      v-model="user.shipping.city"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="State"
+                      ref="state"
+                      v-model="user.shipping.state"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Postcode"
+                      ref="postcode"
+                      v-model="user.shipping.postcode"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Country"
+                      ref="country"
+                      v-model="user.shipping.country"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Shipping Email"
+                      v-model="user.shipping.email"
+                      ref="shipping_email"
+                      type="email"
+                      icon="email"
+                      required
+                      icon-right="close-circle"
+                      icon-right-clickable
+                      @icon-right-click="clearEmailIconClick"
+                    ></b-input>
+                  </b-field>
+                  <b-field>
+                    <b-input
+                      placeholder="Phone"
+                      ref="phone"
+                      v-model="user.shipping.phone"
+                      required
+                      type="text"
+                      icon="form-textbox"
+                    ></b-input> </b-field
+                ></b-step-item>
               </b-steps>
             </div>
           </div>
@@ -200,6 +277,7 @@ export default class Signup extends Vue {
     email: "",
     password: "",
     billing: {},
+    shipping: {},
   };
   $refs: {
     firstName: HTMLFormElement;
