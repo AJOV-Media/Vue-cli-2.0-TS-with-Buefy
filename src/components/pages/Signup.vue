@@ -85,7 +85,7 @@
                   <b-field>
                     <b-input
                       placeholder="Billing Address 1"
-                      ref="billing.address_1"
+                      ref="billing_address_1"
                       v-model="user.billing.address_1"
                       required
                       type="text"
@@ -104,7 +104,7 @@
                   <b-field>
                     <b-input
                       placeholder="City"
-                      ref="city"
+                      ref="billing_city"
                       v-model="user.billing.city"
                       required
                       type="text"
@@ -114,7 +114,7 @@
                   <b-field>
                     <b-input
                       placeholder="State"
-                      ref="state"
+                      ref="billing_state"
                       v-model="user.billing.state"
                       required
                       type="text"
@@ -124,7 +124,7 @@
                   <b-field>
                     <b-input
                       placeholder="Postcode"
-                      ref="postcode"
+                      ref="billing_postcode"
                       v-model="user.billing.postcode"
                       required
                       type="text"
@@ -134,7 +134,7 @@
                   <b-field>
                     <b-input
                       placeholder="Country"
-                      ref="country"
+                      ref="billing_country"
                       v-model="user.billing.country"
                       required
                       type="text"
@@ -157,7 +157,7 @@
                   <b-field>
                     <b-input
                       placeholder="Phone"
-                      ref="phone"
+                      ref="billing_phone"
                       v-model="user.billing.phone"
                       required
                       type="text"
@@ -284,6 +284,16 @@ export default class Signup extends Vue {
     lastName: HTMLFormElement;
     email: HTMLFormElement;
     password: HTMLFormElement;
+
+    //Billing
+    billing_address_1: HTMLFormElement;
+    billing_address_2: HTMLFormElement;
+    billing_city: HTMLFormElement;
+    billing_state: HTMLFormElement;
+    billing_postcode: HTMLFormElement;
+    billing_country: HTMLFormElement;
+    billing_email: HTMLFormElement;
+    billing_phone: HTMLFormElement;
   };
   confirmPassword: string = "";
   labelPosition: "bottom";
@@ -313,6 +323,16 @@ export default class Signup extends Vue {
     const validEmail = this.$refs.email.checkHtml5Validity();
     const validPassword = this.$refs.password.checkHtml5Validity();
 
+    //Billing Validation
+    const validBillingAddress1 = this.$refs.billing_address_1.checkHtml5Validity();
+    const validBillingAddress2 = this.$refs.billing_address_2.checkHtml5Validity();
+    const validBillingCity = this.$refs.billing_city.checkHtml5Validity();
+    const validBillingState = this.$refs.billing_state.checkHtml5Validity();
+    const validBillingPostcode = this.$refs.billing_postcode.checkHtml5Validity();
+    const validBillingCountry = this.$refs.billing_country.checkHtml5Validity();
+    const validBillingEmail = this.$refs.billing_email.checkHtml5Validity();
+    const validBillingPhone = this.$refs.billing_phone.checkHtml5Validity();
+
     if (this.signupStep === 0) {
       if (this.user.password != this.confirmPassword) {
         this.typeConfirmPassword = "is-danger";
@@ -326,6 +346,24 @@ export default class Signup extends Vue {
         return false;
       } else {
         this.signupStep = 1;
+      }
+    }
+
+    if (this.signupStep === 1) {
+      if (
+        !validBillingAddress1 ||
+        !validBillingAddress2 ||
+        !validBillingCity ||
+        !validBillingState ||
+        !validBillingState ||
+        !validBillingPostcode ||
+        !validBillingCountry ||
+        !validBillingEmail ||
+        !validBillingPhone
+      ) {
+        return false;
+      } else {
+        this.signupStep = 2;
       }
     }
   }
