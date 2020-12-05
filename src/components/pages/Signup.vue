@@ -170,7 +170,7 @@
                   ><b-field>
                     <b-input
                       placeholder="Shipping Address 1"
-                      ref="shipping.address_1"
+                      ref="shipping_address_1"
                       v-model="user.shipping.address_1"
                       required
                       type="text"
@@ -189,7 +189,7 @@
                   <b-field>
                     <b-input
                       placeholder="City"
-                      ref="city"
+                      ref="shipping_city"
                       v-model="user.shipping.city"
                       required
                       type="text"
