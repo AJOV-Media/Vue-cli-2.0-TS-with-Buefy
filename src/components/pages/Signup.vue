@@ -199,7 +199,7 @@
                   <b-field>
                     <b-input
                       placeholder="State"
-                      ref="state"
+                      ref="shipping_state"
                       v-model="user.shipping.state"
                       required
                       type="text"
@@ -209,7 +209,7 @@
                   <b-field>
                     <b-input
                       placeholder="Postcode"
-                      ref="postcode"
+                      ref="shipping_postcode"
                       v-model="user.shipping.postcode"
                       required
                       type="text"
@@ -219,7 +219,7 @@
                   <b-field>
                     <b-input
                       placeholder="Country"
-                      ref="country"
+                      ref="shipping_country"
                       v-model="user.shipping.country"
                       required
                       type="text"
@@ -242,7 +242,7 @@
                   <b-field>
                     <b-input
                       placeholder="Phone"
-                      ref="phone"
+                      ref="shipping_phone"
                       v-model="user.shipping.phone"
                       required
                       type="text"
@@ -294,6 +294,16 @@ export default class Signup extends Vue {
     billing_country: HTMLFormElement;
     billing_email: HTMLFormElement;
     billing_phone: HTMLFormElement;
+
+    //shipping
+    shipping_address_1: HTMLFormElement;
+    shipping_address_2: HTMLFormElement;
+    shipping_city: HTMLFormElement;
+    shipping_state: HTMLFormElement;
+    shipping_postcode: HTMLFormElement;
+    shipping_country: HTMLFormElement;
+    shipping_email: HTMLFormElement;
+    shipping_phone: HTMLFormElement;
   };
   confirmPassword: string = "";
   labelPosition: "bottom";
@@ -333,6 +343,16 @@ export default class Signup extends Vue {
     const validBillingEmail = this.$refs.billing_email.checkHtml5Validity();
     const validBillingPhone = this.$refs.billing_phone.checkHtml5Validity();
 
+    //Shipping Validation
+    const validShippingAddress1 = this.$refs.shipping_address_1.checkHtml5Validity();
+    const validShippingAddress2 = this.$refs.shipping_address_2.checkHtml5Validity();
+    const validShippingCity = this.$refs.shipping_city.checkHtml5Validity();
+    const validShippingState = this.$refs.shipping_state.checkHtml5Validity();
+    const validShippingPostcode = this.$refs.shipping_postcode.checkHtml5Validity();
+    const validShippingCountry = this.$refs.shipping_country.checkHtml5Validity();
+    const validShippingEmail = this.$refs.shipping_email.checkHtml5Validity();
+    const validShippingPhone = this.$refs.shipping_phone.checkHtml5Validity();
+
     if (this.signupStep === 0) {
       if (this.user.password != this.confirmPassword) {
         this.typeConfirmPassword = "is-danger";
@@ -364,6 +384,24 @@ export default class Signup extends Vue {
         return false;
       } else {
         this.signupStep = 2;
+      }
+    }
+
+    if (this.signupStep === 2) {
+      if (
+        !validShippingAddress1 ||
+        !validShippingAddress2 ||
+        !validShippingCity ||
+        !validShippingState ||
+        !validShippingState ||
+        !validShippingPostcode ||
+        !validShippingCountry ||
+        !validShippingEmail ||
+        !validShippingPhone
+      ) {
+        return false;
+      } else {
+        //Finally Save the information
       }
     }
   }
